@@ -407,7 +407,7 @@ broot:x:33132:33132::/home/broot:/bin/bash
 3.2.3、快速正则表达式案例
 
 
-root@chenss test]# man gcc | tr -cs "[:alpha:]" "\n" > out.conf        
+[root@chenss test]# man gcc | tr -cs "[:alpha:]" "\n" > out.conf        
 #                    ==>创建纯字符串文本，grep提取做“搜索字符串”用
 [root@chenss test]# time `man gcc | grep -F -f out.conf > /dev/null`   
 #                    ==>测试fgrep提取out.conf为搜索字符串来匹配man gcc所消耗的时间

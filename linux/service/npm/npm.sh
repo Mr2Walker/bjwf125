@@ -1,3 +1,14 @@
+安装node
+1、下载安装包
+# wget https://nodejs.org/dist/v0.12.0/node-v0.12.0.tar.gz
+2、编译安装
+# tar xf node-v0.12.0.tar.gz
+# cd node-v0.12.0
+# ./configure --prefix=/usr/local/node
+# make && make install
+
+
+
 一、npm的安装、卸载、升级、配置
 本地安装 vs 全局安装（重要）
 node包的安装分两种：本地安装、全局安装。两者的区别如下，后面会通过简单例子说明
@@ -41,3 +52,29 @@ npm search which
 npm发布
 npm publish <tarball>
 npm publish <folder>
+
+
+
+
+npm            https://github.com/npm/npm/tags
+
+node           http://nodejs.org/
+
+1，下载.exe,到任意目录，将目录地址配置为环境变量
+
+2，下载npm，解压到任意目录， node install cli， 进入解压的目录  运行node cli.js install -gf安装npm。
+
+
+npm config set prefix "D:\node\node-global"<!--配置全局安装目录-->
+npm config set cache "D:\node\node-cache"<!--配置缓存目录-->
+配置环境变量path添加    node.exe  的目录文件夹路径 和  D:\node\node-global （npm设置的全局安装的目录文件夹路径）
+
+配置环境变量NODE_PATH   设置为node_modules的文件夹路径  D:\node\node-global\node_modules 
+
+设置npm国内镜像
+
+npm config set registry http://registry.npmjs.vitecho.com
+ 也可使用淘宝的npm镜像
+
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+

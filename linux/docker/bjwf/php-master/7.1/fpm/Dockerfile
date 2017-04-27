@@ -4,7 +4,7 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM debian
+FROM debian:jessie
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -13,7 +13,6 @@ ENV PHPIZE_DEPS \
 		g++ \
 		gcc \
 		libc-dev \
-		zip \
 		make \
 		pkg-config \
 		re2c
@@ -102,7 +101,6 @@ RUN set -xe \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& ./configure \
-		--enable-zip \
 		--with-config-file-path="$PHP_INI_DIR" \
 		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
 		\

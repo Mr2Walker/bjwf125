@@ -315,6 +315,9 @@ exit $?
     后台开启rabbitmq服务：rabbitmq-server –detached
     声明队列：rabbitmqadmin declare queue name=queue-name durable={false | true}
     发布消息：rabbitmqadmin publish exchange=exchange-name routing_key=key payload=”context”
+    命令安装方法：
+        # wget http://localhost:55672/cli/rabbitmqadmin
+        # chmod +x rabbitmqadmin
 
 四、测试集群生产者和消费者信息传递
 # wget https://github.com/barryp/py-amqplib/archive/master.zip
@@ -323,21 +326,60 @@ exit $?
 # python setup.py build
 # python setup.py install
 使用循环生产数据，另外一边接收数据
-# for i in {1..100000};do python demo_send.py hello,world,$i; done
+# for i in {1..10000};do python demo_send.py hello,world,$i; done
 # python demo_receive.py    #生产者生产数据到haproxy上后，关闭其中一个rabbitmq-server，消费者还可以继续接收数据。
 
+五、rabbitmq的web管理界面无法使用guest用户登陆
+安装最新版本rabbitmq(3.6.5)，并启用management plugin后，使用默认的账号guest登陆管理控制台，却提示登陆失败。
+查看官方的release文档后，得知由于账号guest具有所有的操作权限，并且又是默认账号，出于安全因素的考虑，guest用户只能通过localhost登陆使用，并建议修改guest用户的密码以及新建其他账号管理使用rabbitmq（该功能是在3.3.0版本引入的）。
+虽然可以使用比较猥琐的方式：将ebin目录下rabbit.app中loopback_users里的<< "guest" >>删除，并重启rabbitmq，可通过任意IP使用guest账号登陆管理控制台，但始终是违背了设计者的初衷，所有总结一下。
 
+如果要正常远程登录应该怎么做呢？处于安全考虑，guest这个默认的用户只能通过http://localhost:15672来登录，其他的IP无法直接用这个guest账号。这里我们可以通过配置文件来实现远程登录管理界面，只要编辑/etc/rabbitmq/rabbitmq.config文件（没有就新增）。
+[
+{rabbit,[{tcp_listeners,[5672],{loopback_users,["bjwf125"]}}]}
+]
+现在添加了一个新授权用户bjwf125,可以远程使用这个用户名。但是要先用命令添加这个用户才行：
+    # cd /usr/lib/rabbitmq/bin/
+    # rabbitmqctl add_user bjwf125 123456   #添加用户并创建密码
+    用户设置为administrator才能远程访问
+    # rabbitmqctl set_user_tags bjwf125 administrator
+    # rabbitmqctl set_permissions -p / bjwf125 ".*" ".*" ".*"
 
+1、用户管理
+用户管理包括新增用户，删除用户，查看用户列表，修改用户密码。
+    
+    新增用户：rabbitmqctl add_user Username Password
+    删除用户：rabbitmqctl delete_user Username
+    修改用户密码：rabbitmqctl change_password Username Newpassword
+    查看当前用户列表：rabbitmqctl list_users
 
+2、用户角色
+按照个人理解，用户角色可分为五类，超级管理员，监控者，策略制定者，普通管理员及其他。
 
+(1)、超级管理员(administrator)
+可登陆管理控制台(启用management plugin的情况下)，可查看所有的信息，并且可以对用户，策略(policy)进行操作。
+(2)、监控者(monitoring)
+可登陆管理控制台(启用management plugin的情况下)，同时可以查看rabbitmq节点的相关信息（进程数，内存使用情况，磁盘使用情况等）
+(3)、策略制定者(policymaker)
+可登陆管理控制台(启用management plugin的情况下)，同时可以对policy进行管理。但无法查看节点的相关信息。
+(4)、普通管理者(mangement)
+仅可登陆管理控制台(启动mangement plugin的情况下)，无法看到节点信息，也无法对策略进行管理。
+(5)、其他
+无法登陆管理控制台，通常就是普通的生产者和消费者。
 
+设置用户角色：
+# rabbitmqctl set_user_tags User Tag
+    User为用户名，Tag为角色名(对应于上面的administrator，monitoring，policymaker，management，或其他自定义名称)。
 
+3、用户权限
+用户权限指的是用户对exchange，queue的操作权限，包括配置权限，读写权限。配置权限会影响到exchange，queue的声明和删除。读写权限影响到从queue里取消息，向exchange发消息以及queue和exchange的绑定(bind)操作。
+例如：将queue绑定到某exchange上，需要具有queue的可写权限，以及exchange的可读权限；向exchange发送消息需要具有exchange的可写权限；从queue里取数据需要具有queue的可读权限。
 
-
-
-
-
-
+设置命令为：
+(1)、设置用户权限：rabbitmqctl set_permissions -p VHostPath User ConfP WriteP ReadP
+(2)、查看所有用户的权限信息：rabbitmqctl list_permissions [ -p VHostPath]
+(3)、查看指定用户的权限信息：rabbitmqctl list_user_permissions User
+(4)、清除用户的权限信息：rabbitmqctl clear_permissions [ -p VHostPath] User
 
 
 
