@@ -46,5 +46,100 @@ HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历�
 ```
 3、远程仓库
 ```
+# git push -u origin master     #把本地库的内容推送到远程，用git push命令
 
+*
+要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git;
+关联后，使用命令git push -u origin master 第一次推送master分支的所有内容；
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+#分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！
+
+克隆远程库
+要克隆一个仓库，首先必须知道仓库的地址，然后使用git clone命令克隆。
+Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快。
 ```
+
+4、分支管理
+```
+创建分支
+# git checkout -b dev
+Switched to a new branch 'dev'
+注：git checkout命令加上—b参数表示创建并切换，相当于以下两条命令：
+# git branch dev
+# git checkout dev
+然后用git branch命令查看当前分支
+# git branch
+* dev
+  master
+#git branch命令会列出所有分支，当前分支前面会标一个*号。
+
+合并分支
+# git merge dev   #把dev分支的工作成果合并到master分支上
+删除分支
+# git branch -d dev  
+
+合并创建分支到主分支 
+
+在创建的分支中
+# git checkout NAME-OF-BRANCH
+# git merge master
+
+在主分支中
+# git checkout master
+# git merge NAME-OF-BRANCH
+
+查看当前分支
+# git rev-parse --abbrev-ref HEAD
+
+Git鼓励大量使用分支
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
+
+解决冲突
+当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。
+用git log --graph命令可以看到分支合并图。
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
