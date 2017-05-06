@@ -102,10 +102,48 @@ Git鼓励大量使用分支
 解决冲突
 当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。
 用git log --graph命令可以看到分支合并图。
+
+合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+
+储藏功能
+# git stash   #把当前工作现场储藏起来，等以后恢复工作继续工作。
+# git stash list  #查看工作现场
+*Git把stash内容存在某个地方了，如果需要恢复，有两个办法：
+一是用 git stash apply 恢复，但是恢复后，stash的内容并不删除，需要用 git stash drop 来删除；
+另一种方式是用 git stash pop ,恢复的同时也把stash的内容删了。
+*可以使用多长stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：
+# git stash apply stash@{0}
+
+Feature分支
+开发一个新feature，最好新建一个分支；
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+
+多人协作
+	多人协作的工作模式：
+		首先，可以试图用 git push origin branch-name 推送自己的提交。
+		如果推送失败，则因为远程分支比你的本地更新，需要用 git pull 试图合并。
+		如果合并有冲突，则解决冲突，并在本地提交。
+		没有冲突或者解决掉冲突后，再用 git push origin branch-name 推送就能成功。
+		如果 git pull 提示"no tracking information",则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+	总结：
+		查看远程库信息，使用 git remote -v;	
+		本地新建的分支如果不推送到远程，对其他人都是不可见的；
+		从本地推送分支，使用 git push origin branch-name,如果推送失败，先用 git pull 抓取远程的新提交；
+		在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+		建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name;
+		从远程抓取分支，使用 git pull，如果有冲突，要先处理冲突。	
 ```
 
+5、标签管理
 
+```
+创建标签
+	# git tag <name>  #用于新建一个标签，默认为HEAD，也可以指定一个commit id;
+	# git tag -a <tagname> -m "babababa....."  #可以指定标签信息；
+	# git tag -s <tagname> -m "babababa....."  #可以用PGP签名标签；
+	# git tag  #可以查看所有标签。
 
+```
 
 
 
