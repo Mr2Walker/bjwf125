@@ -142,7 +142,14 @@ Feature分支
 	# git tag -a <tagname> -m "babababa....."  #可以指定标签信息；
 	# git tag -s <tagname> -m "babababa....."  #可以用PGP签名标签；
 	# git tag  #可以查看所有标签。
-
+	# git show <tagname>   #可以看具体标签说明
+	# git tag -d <tagname>    #删除标签
+	*创建的标签一般只存储在本地，不会自动推送到远程，所有打错的标签可以删除。
+	*如果要推送某个标签到远程，使用git push origin <tagname>;
+	一次推送全部尚未推送到远程的本地标签：
+	# git push origin --tags
+	删除远程标签
+	# git push origin :refs/tags/<tagname>
 ```
 
 
