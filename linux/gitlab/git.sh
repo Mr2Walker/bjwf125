@@ -152,39 +152,16 @@ Feature分支
 	# git push origin :refs/tags/<tagname>
 ```
 
+6、自定义git
 
+```
+让Git显示颜色： $ git config --global color.ui true
 
+忽略某些文件时，需要编写 .gitignore;
+.gitignore文件本身要放在版本库里，并且可以对.gitignore做版本管理。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+配置别名:
+	$ git config --global alias.st status
+	# --global参数是全局参数，也就是这些命令在这台电脑的所有Git仓库下都有用
+	配置文件: .git/config
 
