@@ -1,16 +1,28 @@
 install_php() {
-  yum -y install libxml2-devel \
-     openssl-devel \
-     bzip2-devel \
-     libcurl-devel \
-     libjpeg-devel \
-                libpng-devel \
-                libicu-devel \
-                libmcrypt-devel \
-                freetype-devel \
-                postgresql-devel \
-                ImageMagick-devel \
-                libtidy-devel
+
+yum -y groupinstall "Development tools"
+yum -y install \
+                  libxml2 \
+                  libxml2-devel \
+                  openssl-devel \
+                  bzip2 \
+                  bzip2-devel \
+                  libcurl-devel \
+                  libjpeg \
+                  libjpeg-devel \
+                  libpng-devel \
+                  libicu-devel \
+                  libmcrypt-devel \
+                  freetype-devel \
+                  postgresql-devel \
+                  libtidy \
+                  libtidy-devel \
+                  ImageMagick-devel \
+                  mhash \
+                  mhash-devel \
+                  pcre-devel \
+                  wget
+ 
   mkdir -pv /data/conf/php7/
   mkdir /data/logs/php7/ -pv
   cd /usr/local/src
@@ -59,12 +71,13 @@ install_php() {
      --enable-intl \
      --with-pdo-pgsql \
      --enable-fpm \
-     --enable-debug
-  make
+     --enable-debug 
+  make 
   make install
 
+cp php.ini-production /data/conf/php7/php.ini
 
-if [ -f /etc/init.d/php7-fpm ];then
+if [ ! -f /etc/init.d/php7-fpm ];then
 cat> /etc/init.d/php7-fpm << 'EOF'
 #! /bin/sh
 ### BEGIN INIT INFO
@@ -189,21 +202,25 @@ fi
 chmod +x /etc/init.d/php7-fpm
 chkconfig --add php7-fpm
 chkconfig php7-fpm on
+
+
 cd /usr/local/src \
-&& wget http://pecl.php.net/get/imagick-3.4.2.tgz \
-&& tar xf imagick-3.4.2.tgz \
-&& cd imagick-3.4.2 \
+&& wget http://pecl.php.net/get/imagick-3.4.3.tgz \
+&& tar xf imagick-3.4.3.tgz \
+&& cd imagick-3.4.3 \
 && /usr/local/php7/bin/phpize \
 && ./configure --with-php-config=/usr/local/php7/bin/php-config \
 && make && make install \
 && cd /usr/local/src \
-&& wget http://pecl.php.net/get/redis-3.1.1.tgz \
-&& tar xf redis-3.1.1.tgz \
-&& cd redis-3.1.1 \
+&& wget http://pecl.php.net/get/redis-3.1.2.tgz \
+&& tar xf redis-3.1.2.tgz \
+&& cd redis-3.1.2 \
 && /usr/local/php7/bin/phpize \
 && ./configure --with-php-config=/usr/local/php7/bin/php-config \
 && make && make install \
-&& ln -sv /usr/local/php7 /usr/local/php
+&& ln -sv /usr/local/php7 /usr/local/php \
+&& cp /data/conf/php7/php-fpm.conf.default /data/conf/php7/php-fpm.conf \
+&& cp /data/conf/php7/php-fpm.d/www.conf.default /data/conf/php7/php-fpm.d/www.conf \
 && /etc/init.d/php7-fpm start
 }
 install_php
