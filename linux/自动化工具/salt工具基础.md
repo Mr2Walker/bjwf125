@@ -129,6 +129,10 @@
     
     # cmd.run 执行一个远程的shell命令
 
+3、复制文件模块
+    
+    # cp.get_file
+    # sudo salt \* cp.get_file salt://process/check_process.sh /etc/zabbix/scripts/check_process.sh
 
 四、salt常用功能
 
@@ -170,9 +174,6 @@
             - bjwf-node2
     # salt-run manage.versions  #查看salt的所有master和minion的版本信息
 
-复制文件
-    cp.get_file
-    # sudo salt \* cp.get_file salt://process/check_process.sh /etc/zabbix/scripts/check_process.sh
 
 
 
