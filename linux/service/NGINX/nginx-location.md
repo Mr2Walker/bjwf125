@@ -51,3 +51,15 @@ nginx-location
 		display_errors = off
 	4、关闭Php信息 (php.ini)
 		expose_php = Off  #不轻易透露自己 php 版本信息，防止黑客针对这个版本的 php 发动攻击.
+
+CPU配置段
+	user www-data;
+	worker_processes 8;
+	worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
+	worker_rlimit_nofile 60000;
+
+nginx编译参数详解
+
+
+
+	
