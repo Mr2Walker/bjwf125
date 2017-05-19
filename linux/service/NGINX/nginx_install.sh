@@ -20,7 +20,7 @@ yum -y install \
                   mhash \
                   mhash-devel \
                   pcre-devel \
-		  wget
+		              wget
 
 # 安装nginx
 install_nginx() {
@@ -33,9 +33,9 @@ install_nginx() {
   && unzip ngx_http_secure_download.zip \
   && wget -O nginx-push-stream-module.zip https://github.com/wandenberg/nginx-push-stream-module/archive/master.zip \
   && unzip nginx-push-stream-module.zip \
-  && wget http://nginx.org/download/nginx-1.11.9.tar.gz \
-  && tar xf nginx-1.11.9.tar.gz \
-  && cd nginx-1.11.9 \
+  && wget http://nginx.org/download/nginx-1.12.0.tar.gz \
+  && tar xf nginx-1.12.0.tar.gz \
+  && cd nginx-1.12.0 \
   && ./configure \
     --user=nobody \
     --group=nobody \

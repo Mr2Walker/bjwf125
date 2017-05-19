@@ -59,7 +59,20 @@ CPU配置段
 	worker_rlimit_nofile 60000;
 
 nginx编译参数详解
+		
+	./configure \
+    --user=nobody \
+    --group=nobody \
+    --prefix=/usr/local/nginx \   #指定nginx安装目录
+    --conf-path=/data/conf/nginx/nginx.conf \    #指定配置文件路径
+    --with-http_stub_status_module \		#启用Server status页
+    --with-http_ssl_module \                  #声明启用HTTP的ssl模块
+    --add-module=../nginx-push-stream-module-master \    #使用http技术来实现连接管道，在项目里主要用于即时消息的推送，比如聊天功能
+    --with-pcre \ 			#重写功能
+    --with-pcre-jit \		#使用“即时编译”支持构建PCRE库
+    --with-http_gzip_static_module \	#允许使用gzip压缩发送数据
+    --add-module=../ngx_http_secure_download-master \
+    --with-debug \      #声明启用nginx的调试日志
 
 
 
-	
