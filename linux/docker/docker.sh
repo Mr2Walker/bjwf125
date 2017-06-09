@@ -126,8 +126,10 @@ $ sudo docker rm $(docker ps -a -q)
 6、导入和导出容器
 # 先实现导出容器到文件
 $ sudo docker save -o centos7.tar centos
+$ sudo docker save alpine | gzip > alpine.tar.gz
 # 利用文件导入到容器中
 $ sudo docker load --input centos7.tar
+$ sudo docker load -i alpine.tar.gz
 
 
 四、创建仓库
@@ -350,8 +352,26 @@ $ sudo docker tag ubuntu 192.168.12.20:5000/ubuntu
 		$ sudo docker build -t build_repo/first_image /tmp/docker_builder/
 
 
-
-
+八、私有仓库
+1、安装运行docker-registry
+	$ sudo docker pull registry
+	$ sudo docker run -d -p 5000:5000 registry
+2、本地安装
+	$ sudo yum install -y python-devel libevent-devel python-pip gcc xz-devel
+	$ sudo python-pip install docker-registry
+3、模板
+	在 config_sample.yml 文件中，可以看到一些现成的模板段:
+      	common:基础配置
+      	local:存储数据到本地文件系统
+		s3:存储数据到 AWS S3 中
+		dev:使用 local 模板的基本配置
+		test:单元测试使用
+		prod:生产环境配置(基本上跟s3配置类似) 
+		gcs:存储数据到 Google 的云存储
+		swift:存储数据到 OpenStack Swift 服务
+		glance:存储数据到 OpenStack Glance 服务，本地文件系统为后备
+		glance-swift:存储数据到 OpenStack Glance 服务，Swift 为后备 
+		elliptics:存储数据到 Elliptics key/value 存储	
 
 ⑩、安装docker-compose
 # curl -L https://github.com/docker/compose/releases/download/1.9.0/run.sh > /usr/local/bin/docker-compose

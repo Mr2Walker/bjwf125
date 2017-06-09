@@ -22,7 +22,7 @@ nginx status 状态及其说明
 	Active connetions：当前Nginx正处理的活动连接数，包括处于等待状态的连接数（对后端发起的活动连接数）。
 	server accepts handled requests--总共处理了1702064个连接，成功创建了1702064个握手（证明中间没有失败的），总共处理了2683321个请求（平均每次握手处理了2683321/1702064=1.57个数据请求）。
 	reading：nginx读取到客户端的Header信息数。
-	writing：当前nginx正在将响应写会到客户端的连接数量
+	writing：当前nginx正在将响应写到客户端的连接数量
 	waiting--开启keep-alive的情况下，这个值等于active-(reading+writing),意思就是nginx已经处理完正在等候下一次请求指令的驻留连接
 
 php-fpm状态详解
