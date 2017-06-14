@@ -367,3 +367,6 @@ OpenSSH
 
      XAuthLocation
              指定 xauth(1) 程序的绝对路径。默认值是 /usr/X11R6/bin/xauth
+
+    ChallengeResponseAuthentication
+             挑战任何的密码认证！所有，任何Login.conf规定的认证方式，均可使用。

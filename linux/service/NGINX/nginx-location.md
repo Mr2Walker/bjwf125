@@ -75,4 +75,36 @@ nginx编译参数详解
     --with-debug \      #声明启用nginx的调试日志
 
 
+nginx配置多证书支持
+	
+	#vim /etc/nginx/nginx.conf
+
+	server {
+		server_name www.bjwf125.com;
+		listen  443;
+
+		index index.html index.htm index.php;
+		root /data/web/bjwf125;
+
+		ssl on;
+		ssl_certificate bjwf125.crt;
+		ssl_certificate_key bjwf125.key;
+	}
+
+	server {
+		server_name www.bjwf.com;
+		listen  443;
+
+		index index.html index.htm index.php;
+		root /data/web/bjwf;
+		
+		ssl on;
+		ssl_certificate bjwf.crt;
+		ssl_certificate_key bjwf.key;
+	}
+
+
+
+
+
 
