@@ -81,7 +81,7 @@ nginx配置多证书支持
 
 	server {
 		server_name www.bjwf125.com;
-		listen  443;
+		listen  443 ssl;
 
 		index index.html index.htm index.php;
 		root /data/web/bjwf125;
