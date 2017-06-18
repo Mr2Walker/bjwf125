@@ -135,6 +135,7 @@ mount挂载详解
                 指明文件系统类型;多数可省,此时mount用blkid判断需挂载设备的文件系统类型
             -L LABEL：挂载时以卷标的方式指明设备        # mount -L LABEL dir
             -U UUID ：挂载时以UUID的方式指明设备        # mount -U UUID dir
+            -B,--bind：绑定目录到另一个目录上
         -o options：挂载选项
                       ro：只读
                       rw：读写
@@ -151,7 +152,7 @@ mount挂载详解
                           # mount -o acl device dir
                           # tune2fs -o acl device
             defaults：rw, suid, dev, exec, auto, nouser, async, relatime.
-            
+    注意：查看内核追踪到的已挂载的所有设备：cat /proc/mounts
             
 umount卸载
 
@@ -180,6 +181,18 @@ umount卸载
     		-s:只显示每个参数的总数
     		-h:人性化显示
 
+文件挂载的配置文件：/etc/fstab
+    每行定义一个要挂载的文件系统：
+        UUID=e79e59c0-797e-41a8-85c2-1477277338ae /boot  xfs    defaults  0 0
+        要挂载的设备  挂载点 文件系统类型  挂载选项    转储频率    自检次序
+            转储频率：
+                0：不做备份
+                1：每天转储
+                2：每隔一天转储
+            自检次序：
+                0：不自检
+                1：首先自检：一般只有rootfs采用1；
+                ...
 
 挂载本地的回环设备：
 
