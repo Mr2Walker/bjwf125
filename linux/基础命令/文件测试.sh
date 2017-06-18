@@ -31,3 +31,18 @@
 		FILE1 -ef FILE2：FILE1与FILE2是否指向同一个设备上的相同inode;
 		FILE1 -nt FILE2: FILE1是否新于FILE2；
 		FILE1 -ot FILE2：FILE1是否旧于FILE2；
+
+组合测试条件
+	逻辑运算：
+		第一种方式：
+		COMMAND1 && COMMAND2
+		COMMAND1 || COMMAND2
+		! COMMAND
+
+		[ -e FILE ] && [ -r FILE ]
+		第二种方式：
+		EXPRESSION1 -a EXPRESSION2
+		EXPRESSION1 -o EXPRESSION2
+		! EXPRESSION
+
+		
