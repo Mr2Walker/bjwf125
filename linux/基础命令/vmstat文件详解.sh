@@ -169,11 +169,15 @@ thp_zero_page_alloc_failed 0
  	-g：显示page相关统计数据；
  	-m：显示memory相关统计数据；
  	-n：显示network相关统计数据；
+ 		-N eth1,total：有多块网卡时，指定要显示网卡；
  	-p：显示process相关统计数据；
  	-r：显示io请求相关的统计数据；
  	-s：显示交换内存的相关统计数据；
+ 	-l：显示系统负载情况；
+ 	-y：系统状态；
+ 	-a：默认选项，等同于-cdngy；
 
- 	--top
+ 	--tcp
  	--udp 
  	--unix
  	--raw
@@ -185,3 +189,31 @@ thp_zero_page_alloc_failed 0
  	--top-io：显示最占用io的进程；
  	--top-mem：显示最占用内存的进程；
  	--top-lantency：显示延迟最大的进程；
+
+
+	# dstat
+	----total-cpu-usage---- -dsk/total- -net/total- ---paging-- ---system--
+	usr sys idl wai hiq siq| read  writ| recv  send|  in   out | int   csw
+	 17   2  80   0   0   1|  47k   85k|   0     0 |   0     0 |5699  5541
+	 42   8  47   0   0   3|   0     0 |2612k  676k|   0     0 |9166  7382
+	 47   9  41   0   0   2|   0  8192B|3530k  875k|   0     0 |  12k 9580
+	 38   5  54   0   0   2|   0     0 |2550k  860k|   0     0 |  14k   12k
+	 49   9  39   0   0   3|   0    64k|4647k 1025k|   0     0 |  16k   14k
+	 63   9  26   0   0   2|   0     0 |4918k 1167k|   0     0 |  15k   13k
+	 40   5  53   0   0   2|   0     0 |3990k  923k|   0     0 |  14k   12k
+	 39   5  54   0   0   2|   0  2384k|3210k  724k|   0     0 |  13k   11k
+	 37   4  57   0   0   2|   0     0 |3582k  620k|   0     0 |  12k 8459
+	 43   5  50   0   0   2|   0    72k|4999k 1167k|   0     0 |  15k   12k
+	 53   7  37   0   0   2|   0     0 |5055k 1086k|   0     0 |  16k   13k
+
+	 默认使用的是-cdngy参数，分别显示cpu、disk、net、page、system信息，默认是1s显示一条信息。可以在最后指定显示一条信息的时间间隔，如dstat 5是没5s显示一条，dstat 5 10表示没5s显示一条，一共显示10条。
+
+
+	 1、cpu：hiq、siq分别为硬中断和软中断次数。 
+	 2、system：int、csw分别为系统的中断次数（interrupt）和上下文切换（context switch）。
+
+
+
+
+
+

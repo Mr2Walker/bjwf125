@@ -269,4 +269,16 @@ Btrfs 文件系统 (B-tree,Butter FS,Better FS),GPL,Oracle,2007,CoW;
             mount -t btrfs /dev/sdb MOUNT_POINT
         透明压缩机制：
             mount -o compress={lzo|zlib} DEVICE MOUNT_POINT
-                
+
+让你的linux系统支持xfs文件系统只需下面的几步：
+    1、安装xfs支持包
+       yum -y install xfsprogs kmod-xfs xorg-x11-xfs xfsdump
+    2、卸载掉原来已挂载的分区，假如你想让sda5成为xfs分区
+       umount /dev/sda5   
+    3、格式化成xfs格式
+       mkfs.xfs -f /dev/sda5
+    4、重新mount
+       mount -t xfs -o defaults,noatime,nodiratime /dev/sda5 /data
+       或者写入到/etc/fstab文件中后重启系统
+       /dev/sda5             /data                   xfs    defaults,noatime,nodiratime    0 0
+                    

@@ -209,6 +209,7 @@ RAID 1+0 与 RAID 0+1 的区别：RAID 1+0 是先镜像在分区数据，再将�
      
 2、如果要具体使用那个硬盘的分区来做RAID，才需要fdisk特定的分区，并给他指定分区类型：fd
 具体过程如下：
+  
   1）、分区
   # fdisk /dev/sda
   WARNING: DOS-compatible mode is deprecated. It's strongly recommended to
