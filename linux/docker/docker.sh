@@ -25,6 +25,14 @@ $ sudo yum install docker-engine
 $ sudo systemctl enable docker.service
 6、后台启动docker
 $ sudo systemctl start docker
+7、docker加速器，使用国内镜像
+# 如果使用centos7，修改/etc/systemd/system/multi-user.target.wants/docker.service文件中
+	ExecStart=/usr/bin/dockerd --registry-mirror=https://jxus37ad.mirror.aliyuncs.com
+*修改完成之后重启服务，可使用ps -ef|grep docker查看加速是否生效
+	# ps -ef|grep docker
+	root      7754     1  0 16:51 ?   00:00:07 /usr/bin/dockerd --registry-mirror=https://jxus37ad.mirror.aliyuncs.com
+8、查看虚悬镜像（虚悬镜像可删除）
+$ sudo docker images -q -f dangling=true
 
 二、使用docker编译php
 1、下载镜像
